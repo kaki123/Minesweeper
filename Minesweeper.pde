@@ -92,10 +92,27 @@ public class MSButton
         //your code here
         if(keyPressed){
             marked= true; 
-
         }
-        elif(0){}
+        else if(bombs.contains(this)){
+           displayLosingMessage();
+        }
+        else if(countBombs(r,c)>0){
+            setLabel(str(countBombs(r,c)));
+        }
+        else if(isValid(r,c) && buttons[r][c-1].isMarked()==true){
+            buttons[r][c-1].mousePressed();
+        }
+
+        else if(isValid(r,c) && buttons[r][c+1].isMarked()==true){
+            buttons[r][c+1].mousePressed();
+        }
+         else if(isValid(r,c) && buttons[r-1][c].isMarked()==true)
+            buttons[r-1][c].mousePressed();
+        else if(isValid(r,c) && buttons[r+1][c].isMarked()==true)
+            buttons[r+1][c].mousePressed();
+
     }
+
 
     public void draw () 
     {    
@@ -118,7 +135,7 @@ public class MSButton
     }
     public boolean isValid(int r, int c)
     {
-        if(r<=400&c<=400){
+        if(r<=400&&r>0&c<=400&&c>0){
             return true;}
         return false;
     }
