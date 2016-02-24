@@ -22,8 +22,9 @@ void setup ()
     }
     
     
+
+            setBombs();
     
-    setBombs();
 }
 public void setBombs()
 {
@@ -90,8 +91,8 @@ public class MSButton
     {
         clicked = true;
         //your code here
-        if(keyPressed){
-            marked= true; 
+        if(keyPressed==true){
+            marked= false; 
         }
         else if(bombs.contains(this)){
            displayLosingMessage();
@@ -99,18 +100,17 @@ public class MSButton
         else if(countBombs(r,c)>0){
             setLabel(str(countBombs(r,c)));
         }
-        else if(isValid(r,c) && buttons[r][c-1].isMarked()==true){
-            buttons[r][c-1].mousePressed();
+        else {
+            if(isValid(r,c) && buttons[r][c-1].isMarked()==false){
+                buttons[r][c-1].mousePressed();
+            
+                buttons[r][c+1].mousePressed();
+         
+                buttons[r-1][c].mousePressed();
+           
+                buttons[r+1][c].mousePressed();
+             }   
         }
-
-        else if(isValid(r,c) && buttons[r][c+1].isMarked()==true){
-            buttons[r][c+1].mousePressed();
-        }
-         else if(isValid(r,c) && buttons[r-1][c].isMarked()==true)
-            buttons[r-1][c].mousePressed();
-        else if(isValid(r,c) && buttons[r+1][c].isMarked()==true)
-            buttons[r+1][c].mousePressed();
-
     }
 
 
