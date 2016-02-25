@@ -51,7 +51,7 @@ public boolean isWon()
 }
 public void displayLosingMessage()
 {
-    //your code here
+    background(0);
 }
 public void displayWinningMessage()
 {
@@ -91,25 +91,29 @@ public class MSButton
     {
         clicked = true;
         //your code here
+    
         if(keyPressed==true){
-            marked= false; 
+            marked=true;
         }
-        else if(bombs.contains(this)){
+         else if(bombs.contains(this)){
            displayLosingMessage();
         }
         else if(countBombs(r,c)>0){
             setLabel(str(countBombs(r,c)));
         }
-        else {
-            if(isValid(r,c) && buttons[r][c-1].isMarked()==false){
+        else{
+            if(isValid(r,c-1) && buttons[r][c-1].isMarked()){
                 buttons[r][c-1].mousePressed();
-            
+            }
+            if(isValid(r,c+1) && buttons[r][c+1].isMarked()){
                 buttons[r][c+1].mousePressed();
-         
+            }
+            if(isValid(r-1,c) && buttons[r-1][c].isMarked()){
                 buttons[r-1][c].mousePressed();
-           
+            }
+           if(isValid(r+1,c) && buttons[r+1][c].isMarked()){
                 buttons[r+1][c].mousePressed();
-             }   
+            }   
         }
     }
 
@@ -135,8 +139,9 @@ public class MSButton
     }
     public boolean isValid(int r, int c)
     {
-        if(r<=400&&r>0&c<=400&&c>0){
-            return true;}
+        if(r<=NUM_ROWS&&c<=NUM_COLS){
+            return true;
+        }
         return false;
     }
     public int countBombs(int row, int col)
