@@ -89,19 +89,50 @@ public class MSButton
     
     public void mousePressed () 
     {
-        clicked = true;
+        
         //your code here
     
-        if(keyPressed==true){
-            marked=true;
+        if(mouseButton == RIGHT){
+            marked=!marked;
+            return;
         }
-         else if(bombs.contains(this)){
+        clicked=true;
+        
+        if(bombs.contains(this)){
+           displayLosingMessage();}
+        
+        else if(countBombs(r,c)>0){
+            setLabel(str(countBombs(r,c)));  }
+        else{
+            for(int r1=-1;r1<2;r1++){
+                for(int c1=-1;c1<2;c1++){
+                    if((r1 != 0 || c1 != 0) && isValid(r + r1, c + c1) && !buttons[r + r1][c + c1].isClicked())
+                        buttons[r + r1][c + c1].mousePressed();
+                   
+                }
+            }
+            /*if(isValid(r,c-1) && buttons[r][c-1].isMarked()){
+                buttons[r][c-1].mousePressed();
+            }
+            if(isValid(r,c+1) && buttons[r][c+1].isMarked()){
+                buttons[r][c+1].mousePressed();
+            }
+            if(isValid(r-1,c) && buttons[r-1][c].isMarked()){
+                buttons[r-1][c].mousePressed();
+            }
+           if(isValid(r+1,c) && buttons[r+1][c].isMarked()){
+                buttons[r+1][c].mousePressed();
+            } */
+        }
+            
+        
+      /*   else if(bombs.contains(this)){
            displayLosingMessage();
         }
         else if(countBombs(r,c)>0){
             setLabel(str(countBombs(r,c)));
-        }
-        else{
+        }*/
+       /* else{
             if(isValid(r,c-1) && buttons[r][c-1].isMarked()){
                 buttons[r][c-1].mousePressed();
             }
@@ -114,7 +145,7 @@ public class MSButton
            if(isValid(r+1,c) && buttons[r+1][c].isMarked()){
                 buttons[r+1][c].mousePressed();
             }   
-        }
+        }*/
     }
 
 
@@ -139,7 +170,7 @@ public class MSButton
     }
     public boolean isValid(int r, int c)
     {
-        if(r<=NUM_ROWS&&c<=NUM_COLS){
+        if(r<=NUM_ROWS&&c<=NUM_COLS&&r>=0&&c>=0){
             return true;
         }
         return false;
