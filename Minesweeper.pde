@@ -46,16 +46,34 @@ public void draw ()
 }
 public boolean isWon()
 {
-    //your code here
+    for(int i=0; i<bombs.size(); i++)
+    if(bombs.get(i).isMarked()==true){
+        return true;
+    }
     return false;
 }
 public void displayLosingMessage()
 {
-    background(0);
+    buttons[5][5].setLabel("Y");
+    buttons[5][6].setLabel("O");
+    buttons[5][7].setLabel("U");
+    buttons[5][8].setLabel("");
+    buttons[5][9].setLabel("L");
+    buttons[5][10].setLabel("O");
+    buttons[5][11].setLabel("S");
+    buttons[5][12].setLabel("E");
 }
 public void displayWinningMessage()
 {
-    //your code here
+    buttons[5][5].setLabel("Y");
+    buttons[5][6].setLabel("O");
+    buttons[5][7].setLabel("U");
+    buttons[5][8].setLabel("");
+    buttons[5][9].setLabel("W");
+    buttons[5][10].setLabel("I");
+    buttons[5][11].setLabel("N");
+    buttons[5][12].setLabel("!");
+
 }
 
 public class MSButton
@@ -89,38 +107,62 @@ public class MSButton
     
     public void mousePressed () 
     {
-        
-        //your code here
-    
         if(mouseButton == RIGHT){
             marked=!marked;
-            return;
         }
         clicked=true;
         
         if(bombs.contains(this)){
-           displayLosingMessage();}
-        
+            stroke(255,255,255);
+            displayLosingMessage();
+        }
+
         else if(countBombs(r,c)>0){
-            setLabel(str(countBombs(r,c)));  }
+            setLabel(str(countBombs(r,c)));  
+        }
+
         else{
-            for(int r1=-1;r1<2;r1++){
+              if (isValid(r, c-1) && buttons[r][c-1].isClicked() == false) {
+                buttons[r][c-1].mousePressed();
+              }
+              if (isValid(r, c+1) && buttons[r][c+1].isClicked() == false) {
+                buttons[r][c+1].mousePressed();
+              }
+              if (isValid(r-1, c-1) && buttons[r-1][c-1].isClicked() == false) {
+                buttons[r-1][c-1].mousePressed();
+              }
+              if (isValid(r-1, c) && buttons[r-1][c].isClicked() == false) {
+                buttons[r-1][c].mousePressed();
+              }
+              if (isValid(r-1, c+1) && buttons[r-1][c+1].isClicked() == false) {
+                buttons[r-1][c+1].mousePressed();
+              }
+              if (isValid(r+1, c) && buttons[r+1][c].isClicked() == false) {
+                buttons[r+1][c].mousePressed();
+              }
+              if (isValid(r+1, c+1) && buttons[r+1][c+1].isClicked() == false) {
+                buttons[r+1][c+1].mousePressed();
+              }
+              if (isValid(r+1, c-1) && buttons[r+1][c-1].isClicked() == false) {
+                buttons[r+1][c-1].mousePressed();
+              }
+            /*for(int r1=-1;r1<2;r1++){
                 for(int c1=-1;c1<2;c1++){
-                    if((r1 != 0 || c1 != 0) && isValid(r + r1, c + c1) && !buttons[r + r1][c + c1].isClicked())
+                    if( isValid(r + r1, c + c1) && buttons[r + r1][c + c1].isClicked()==false)
                         buttons[r + r1][c + c1].mousePressed();
                    
                 }
-            }
-            /*if(isValid(r,c-1) && buttons[r][c-1].isMarked()){
+            }*/
+           /* if(isValid(r,c-1) && !buttons[r][c-1].isClicked()){
                 buttons[r][c-1].mousePressed();
             }
-            if(isValid(r,c+1) && buttons[r][c+1].isMarked()){
+            if(isValid(r,c+1) && !buttons[r][c+1].isClicked()){
                 buttons[r][c+1].mousePressed();
             }
-            if(isValid(r-1,c) && buttons[r-1][c].isMarked()){
+            if(isValid(r-1,c) && !buttons[r-1][c].isClicked()){
                 buttons[r-1][c].mousePressed();
             }
-           if(isValid(r+1,c) && buttons[r+1][c].isMarked()){
+           if(isValid(r+1,c) && !buttons[r+1][c].isClicked()){
                 buttons[r+1][c].mousePressed();
             } */
         }
@@ -159,7 +201,7 @@ public class MSButton
             fill( 200 );
         else 
             fill( 100 );
-
+       
         rect(x, y, width, height);
         fill(0);
         text(label,x+width/2,y+height/2);
